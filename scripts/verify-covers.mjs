@@ -17,12 +17,12 @@ for (const book of books) {
     continue;
   }
   try {
-    const res = await fetch(url, { method: "HEAD", redirect: "follow" });
-    const ct = res.headers.get("content-type") || "";
-    if (res.ok && ct.includes("image")) ok += 1;
+    const res = await fetch(url, { redirect: "follow" });
+    const buf = await res.arrayBuffer();
+    if (res.ok && buf.byteLength > 4000) ok += 1;
     else {
       fail += 1;
-      failures.push({ title: book.title, status: res.status, url });
+      failures.push({ title: book.title, status: res.status, bytes: buf.byteLength, url });
     }
   } catch (err) {
     fail += 1;
