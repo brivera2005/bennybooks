@@ -3,126 +3,6 @@
   "source": "seed",
   "books": [
     {
-      "id": "mud-benjamin",
-      "title": "mūd",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Experimental prose",
-      "cover": "assets/covers/wip/mud.svg",
-      "source": "wip"
-    },
-    {
-      "id": "the-last-harvest-benjamin",
-      "title": "The Last Harvest",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Speculative drama",
-      "cover": "assets/covers/wip/the-last-harvest.svg",
-      "source": "wip"
-    },
-    {
-      "id": "strewn-benjamin",
-      "title": "Strewn",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Novel (not the game)",
-      "cover": "assets/covers/wip/strewn.svg",
-      "source": "wip"
-    },
-    {
-      "id": "i-for-an-eye-benjamin",
-      "title": "I For An Eye",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Revenge parable",
-      "cover": "assets/covers/wip/i-for-an-eye.svg",
-      "source": "wip"
-    },
-    {
-      "id": "idolware-benjamin",
-      "title": "Idolware",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Celebrity and media satire",
-      "cover": "assets/covers/wip/idolware.svg",
-      "source": "wip"
-    },
-    {
-      "id": "zero-copy-benjamin",
-      "title": "Zero Copy",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Tech-noir",
-      "cover": "assets/covers/wip/zero-copy.svg",
-      "source": "wip"
-    },
-    {
-      "id": "the-ceiling-benjamin",
-      "title": "The Ceiling",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Psychological thriller",
-      "cover": "assets/covers/wip/the-ceiling.svg",
-      "source": "wip"
-    },
-    {
-      "id": "the-paper-fugue-benjamin",
-      "title": "The Paper Fugue",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Puzzle-box literary",
-      "cover": "assets/covers/wip/the-paper-fugue.svg",
-      "source": "wip"
-    },
-    {
-      "id": "just-another-god-and-rush-benjamin",
-      "title": "Just Another God and Rush",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Mythic contemporary",
-      "cover": "assets/covers/wip/just-another-god-and-rush.svg",
-      "source": "wip"
-    },
-    {
-      "id": "prose-of-cons-benjamin",
-      "title": "Prose of Cons",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Satirical literary",
-      "cover": "assets/covers/wip/prose-of-cons.svg",
-      "source": "wip"
-    },
-    {
-      "id": "full-bleed-benjamin",
-      "title": "Full Bleed",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Literary fiction",
-      "cover": "assets/covers/wip/full-bleed.svg",
-      "source": "wip"
-    },
-    {
-      "id": "where-the-lines-blur-benjamin",
-      "title": "Where the Lines Blur",
-      "author": "Benjamin",
-      "genre": "WIP Novel",
-      "status": "wip",
-      "notes": "Prequel to Full Bleed",
-      "cover": "assets/covers/wip/where-the-lines-blur.svg",
-      "source": "wip"
-    },
-    {
       "id": "red-rising-pierce-brown",
       "title": "Red Rising",
       "author": "Pierce Brown",
@@ -217,7 +97,8 @@
       "rating": null,
       "dateRead": "2026-06-03",
       "source": "seed",
-      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication71/v4/ab/b2/90/abb2902b-bb1a-46dd-a972-59b2e160aa8e/9780553393163.jpg/1000x1000bb.jpg"
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication71/v4/ab/b2/90/abb2902b-bb1a-46dd-a972-59b2e160aa8e/9780553393163.jpg/1000x1000bb.jpg",
+      "coverSource": "itunes"
     },
     {
       "id": "the-way-of-kings-brandon-sanderson",
@@ -682,16 +563,16 @@
       "source": "seed"
     },
     {
-      "id": "the-devils-bastards-joe-abercrombie",
-      "title": "The Devils' Bastards",
+      "id": "the-devils-joe-abercrombie",
+      "title": "The Devils",
       "author": "Joe Abercrombie",
-      "series": "The Age of Madness",
-      "seriesOrder": 4,
-      "pages": 512,
+      "series": "The Devils",
+      "seriesOrder": 1,
+      "pages": 576,
       "genre": "Fantasy",
       "rating": null,
-      "isbn": "9780316471105",
-      "cover": "https://covers.openlibrary.org/b/isbn/9780316471105-L.jpg",
+      "isbn": "9781250880062",
+      "cover": "https://covers.openlibrary.org/b/id/15229572-L.jpg",
       "dateRead": "2026-02-21",
       "source": "seed"
     },
@@ -875,7 +756,7 @@
       "id": "the-shadow-of-the-gods-john-gwynne",
       "title": "The Shadow of the Gods",
       "author": "John Gwynne",
-      "series": "Blood and Fire",
+      "series": "Bloodsworn Saga",
       "seriesOrder": 1,
       "pages": 480,
       "genre": "Fantasy",
@@ -886,30 +767,30 @@
       "source": "seed"
     },
     {
-      "id": "the-fury-of-the-gods-john-gwynne",
-      "title": "The Fury of the Gods",
+      "id": "the-hunger-of-the-gods-john-gwynne",
+      "title": "The Hunger of the Gods",
       "author": "John Gwynne",
-      "series": "Blood and Fire",
+      "series": "Bloodsworn Saga",
       "seriesOrder": 2,
       "pages": 512,
       "genre": "Fantasy",
       "rating": 4.5,
       "isbn": "9780356510689",
-      "cover": "https://covers.openlibrary.org/b/id/15150796-L.jpg",
+      "cover": "https://covers.openlibrary.org/b/id/12817685-L.jpg",
       "dateRead": "2026-01-07",
       "source": "seed"
     },
     {
-      "id": "the-fall-of-the-gods-john-gwynne",
-      "title": "The Fall of the Gods",
+      "id": "the-fury-of-the-gods-john-gwynne",
+      "title": "The Fury of the Gods",
       "author": "John Gwynne",
-      "series": "Blood and Fire",
+      "series": "Bloodsworn Saga",
       "seriesOrder": 3,
       "pages": 544,
       "genre": "Fantasy",
       "rating": 4.5,
-      "isbn": "9780356510702",
-      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication116/v4/bb/a8/7c/bba87cf6-2e26-af5e-7100-e4a6c80de927/9780316539876.jpg/1000x1000bb.jpg",
+      "isbn": "9780356510719",
+      "cover": "https://covers.openlibrary.org/b/id/15150796-L.jpg",
       "dateRead": "2026-01-04",
       "source": "seed"
     },
@@ -1999,9 +1880,10 @@
       "genre": "Fantasy",
       "rating": 4.5,
       "isbn": "9780765348780",
-      "cover": "https://covers.openlibrary.org/b/id/374277-L.jpg",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication/v4/2b/92/4f/2b924f7c-d17c-f523-75a7-8d88f78de520/9781429926584.jpg/1000x1000bb.jpg",
       "dateRead": "2025-05-12",
-      "source": "seed"
+      "source": "seed",
+      "coverSource": "itunes"
     },
     {
       "id": "assassin-s-apprentice-robin-hobb",
@@ -2253,7 +2135,8 @@
       "isbn": "9780345497510",
       "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication4/v4/0c/fc/60/0cfc6041-4649-3401-bf8e-526e9d500cec/9780345515667.jpg/1000x1000bb.jpg",
       "dateRead": "2025-03-16",
-      "source": "seed"
+      "source": "seed",
+      "coverSource": "itunes"
     },
     {
       "id": "tigana-guy-gavriel-kay",
@@ -3049,7 +2932,8 @@
       "isbn": "9780316421994",
       "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication113/v4/a5/6c/fd/a56cfd11-ed0b-f7b1-1735-196ad4abe1a1/9780316421980.jpg/1000x1000bb.jpg",
       "dateRead": "2024-09-20",
-      "source": "seed"
+      "source": "seed",
+      "coverSource": "itunes"
     },
     {
       "id": "vicious-v-e-schwab",
