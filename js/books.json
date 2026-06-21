@@ -1,0 +1,78 @@
+{
+  "updated": "2026-06-21",
+  "source": "seed",
+  "books": [
+    {
+      "id": "project-hail-mary-andy-weir",
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "pages": 496,
+      "genre": "Science Fiction",
+      "rating": 5,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780593135204-M.jpg",
+      "isbn": "9780593135204",
+      "dateRead": "2026-04-12",
+      "source": "seed"
+    },
+    {
+      "id": "tomorrow-and-tomorrow-and-tomorrow-gabrielle-zevin",
+      "title": "Tomorrow, and Tomorrow, and Tomorrow",
+      "author": "Gabrielle Zevin",
+      "pages": 401,
+      "genre": "Literary Fiction",
+      "rating": 4.5,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780593321201-M.jpg",
+      "isbn": "9780593321201",
+      "dateRead": "2026-03-08",
+      "source": "seed"
+    },
+    {
+      "id": "the-body-keeps-the-score-bessel-van-der-kolk",
+      "title": "The Body Keeps the Score",
+      "author": "Bessel van der Kolk",
+      "pages": 464,
+      "genre": "Psychology",
+      "rating": 4,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780143127741-M.jpg",
+      "isbn": "9780143127741",
+      "dateRead": "2026-02-19",
+      "source": "seed"
+    },
+    {
+      "id": "demon-copperhead-barbara-kingsolver",
+      "title": "Demon Copperhead",
+      "author": "Barbara Kingsolver",
+      "pages": 560,
+      "genre": "Literary Fiction",
+      "rating": 4.5,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780063251922-M.jpg",
+      "isbn": "9780063251922",
+      "dateRead": "2026-01-30",
+      "source": "seed"
+    },
+    {
+      "id": "the-midnight-library-matt-haig",
+      "title": "The Midnight Library",
+      "author": "Matt Haig",
+      "pages": 304,
+      "genre": "Fantasy",
+      "rating": 3.5,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780525559474-M.jpg",
+      "isbn": "9780525559474",
+      "dateRead": "2025-12-14",
+      "source": "seed"
+    },
+    {
+      "id": "klara-and-the-sun-kazuo-ishiguro",
+      "title": "Klara and the Sun",
+      "author": "Kazuo Ishiguro",
+      "pages": 303,
+      "genre": "Literary Fiction",
+      "rating": 4,
+      "cover": "https://covers.openlibrary.org/b/isbn/9780593318171-M.jpg",
+      "isbn": "9780593318171",
+      "dateRead": "2025-11-02",
+      "source": "seed"
+    }
+  ]
+}

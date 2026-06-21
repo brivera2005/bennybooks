@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Benny Books — Benjamin's reading log with covers, genres, page counts, and personal ratings.">
+  <meta name="theme-color" content="#0d1117">
+  <meta property="og:title" content="Benny Books">
+  <meta property="og:description" content="Latest reads in a cover grid — genre, page count, and my rating.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <title>Benny Books</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="glow glow--hero" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="nav__logo" href="#top">
+      <span class="nav__logo-mark" aria-hidden="true">📚</span>
+      Benny Books
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#reads">Reads</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/brivera2005/bennybooks" target="_blank" rel="noopener">Source</a>
+    </nav>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__intro">
+        <ul class="hero__stats" aria-label="Reading overview">
+          <li class="hero__stat hero__stat--label">Reading Log</li>
+          <li class="hero__stat" id="bookCount">8 books read</li>
+          <li class="hero__stat hero__stat--accent">Tap stars to rate</li>
+        </ul>
+        <h1 class="hero__title">
+          <span class="hero__title-main">Benny</span>
+          <span class="hero__title-accent">Books</span>
+        </h1>
+        <p class="hero__tagline">Latest reads in a cover grid — genre, page count, and my rating.</p>
+      </div>
+    </section>
+
+    <section class="reads" id="reads">
+      <header class="reads-header">
+        <div class="reads-header__titles">
+          <p class="section__eyebrow">Recently Read</p>
+          <h2 class="reads-header__title">The Shelf</h2>
+        </div>
+        <div class="sort-toggle" role="group" aria-label="Sort books">
+          <button type="button" class="sort-toggle__btn is-active" data-sort="recent" aria-pressed="true">Most Recent</button>
+          <button type="button" class="sort-toggle__btn" data-sort="rating" aria-pressed="false">Top Rated</button>
+        </div>
+      </header>
+
+      <div id="bookGrid" class="book-grid" role="list" aria-label="Books read"></div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about__inner">
+        <p class="section__eyebrow">About</p>
+        <h2 class="about__title">Stories worth the shelf space.</h2>
+        <p class="about__copy">
+          A personal reading log linked from my GitHub profile. Covers and metadata live in
+          <code>js/books.json</code> — import a Storygraph CSV export to refresh titles.
+          Star ratings you set here stay in your browser until sync is wired up.
+        </p>
+        <p class="about__links">
+          <a href="https://github.com/brivera2005">GitHub</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://bennyblack.pages.dev">Benny Black</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://github.com/brivera2005/bennybooks">Source</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Benny Books · Benjamin Rivera</p>
+  </footer>
+
+  <script src="js/books.js" type="module"></script>
+</body>
+</html>

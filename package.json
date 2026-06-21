@@ -1,0 +1,13 @@
+{
+  "name": "bennybooks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Benny Books — reading log with cover grid and ratings",
+  "scripts": {
+    "build": "node scripts/validate.mjs",
+    "deploy": "npx wrangler pages deploy . --project-name=bennyreads"
+  },
+  "devDependencies": {
+    "wrangler": "^4.24.0"
+  }
+}
