@@ -203,6 +203,40 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   letter-spacing: 0.04em;
 }
 
+.grid-header__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.filter-toggle {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.filter-toggle__btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filter-toggle__btn.is-active,
+.filter-toggle__btn:hover {
+  color: var(--text);
+  background: rgba(20, 184, 166, 0.18);
+}
+
+.filter-toggle__btn.is-active {
+  color: var(--teal-light);
+}
+
 .sort-toggle {
   display: inline-flex;
   padding: 3px;
@@ -276,6 +310,33 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     0 22px 48px rgba(0, 0, 0, 0.42),
     0 0 28px var(--teal-glow),
     0 0 0 1px rgba(20, 184, 166, 0.22);
+}
+
+.book-card--wip {
+  border-color: rgba(20, 184, 166, 0.28);
+  background: linear-gradient(180deg, rgba(20, 184, 166, 0.06) 0%, var(--bg-card) 40%);
+}
+
+.book-card--wip:hover {
+  border-color: rgba(45, 212, 191, 0.55);
+}
+
+.book-card__ribbon {
+  position: absolute;
+  top: 10px;
+  left: -28px;
+  z-index: 2;
+  width: 110px;
+  padding: 0.28rem 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #042f2e;
+  background: linear-gradient(90deg, var(--teal-light), var(--teal));
+  transform: rotate(-42deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .book-card__cover-wrap {

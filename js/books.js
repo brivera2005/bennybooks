@@ -3,6 +3,7 @@ const STORAGE_KEY = "bennybooks-ratings";
 /** @type {{ updated?: string, source?: string, books: Array<Record<string, unknown>> }} */
 let catalog = { books: [] };
 let sortMode = "recent";
+let filterMode = "all";
 
 const els = {
   grid: () => document.getElementById("bookGrid"),
@@ -13,6 +14,10 @@ const els = {
   totalPages: () => document.getElementById("totalPages"),
   exportBtn: () => document.getElementById("exportRatings"),
 };
+
+function isWip(book) {
+  return book.status === "wip" || book.genre === "WIP Novel" || book.source === "wip";
+}
 
 function loadRatings() {
   try {
@@ -35,7 +40,10 @@ function getRating(book) {
 }
 
 function coverUrl(book) {
-  if (book.cover) return book.cover.replace(/-M\.jpg/, "-L.jpg");
+  if (book.cover) {
+    if (book.cover.startsWith("assets/")) return book.cover;
+    return book.cover.replace(/-M\.jpg/, "-L.jpg");
+  }
   if (book.isbn) return `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg?default=false`;
   return "";
 }
@@ -54,8 +62,17 @@ function seriesSortKey(book) {
   return `${book.series}\0${String(order).padStart(4, "0")}\0${book.title}`;
 }
 
+function filteredBooks() {
+  const books = catalog.books.filter((book) => {
+    if (filterMode === "wip") return isWip(book);
+    if (filterMode === "read") return !isWip(book);
+    return true;
+  });
+  return books;
+}
+
 function sortedBooks() {
-  const books = [...catalog.books];
+  const books = [...filteredBooks()];
   if (sortMode === "rating") {
     return books.sort(
       (a, b) => getRating(b) - getRating(a) || (b.dateRead || "").localeCompare(a.dateRead || "")
@@ -70,6 +87,9 @@ function sortedBooks() {
         seriesSortKey(a).localeCompare(seriesSortKey(b)) ||
         (b.dateRead || "").localeCompare(a.dateRead || "")
     );
+  }
+  if (filterMode === "wip") {
+    return books.sort((a, b) => String(a.title).localeCompare(String(b.title)));
   }
   return books.sort((a, b) => (b.dateRead || "").localeCompare(a.dateRead || ""));
 }
@@ -130,19 +150,27 @@ function fallbackCover(book) {
 }
 
 function renderBookCard(book) {
+  const wip = isWip(book);
   const card = document.createElement("article");
-  card.className = "book-card";
+  card.className = wip ? "book-card book-card--wip" : "book-card";
   card.setAttribute("role", "listitem");
 
   const coverWrap = document.createElement("div");
   coverWrap.className = "book-card__cover-wrap";
+
+  if (wip) {
+    const ribbon = document.createElement("span");
+    ribbon.className = "book-card__ribbon";
+    ribbon.textContent = "WIP";
+    coverWrap.appendChild(ribbon);
+  }
 
   const url = coverUrl(book);
   if (url) {
     const img = document.createElement("img");
     img.className = "book-card__cover";
     img.src = url;
-    img.alt = `Cover of ${book.title}`;
+    img.alt = wip ? `WIP cover for ${book.title}` : `Cover of ${book.title}`;
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => img.replaceWith(fallbackCover(book)));
@@ -176,6 +204,13 @@ function renderBookCard(book) {
     genre.textContent = book.genre;
     meta.appendChild(genre);
   }
+  if (book.notes && wip) {
+    const notes = document.createElement("span");
+    notes.className = "badge badge--muted";
+    notes.textContent = book.notes;
+    notes.title = book.notes;
+    meta.appendChild(notes);
+  }
   if (book.series && book.seriesOrder) {
     const series = document.createElement("span");
     series.className = "badge badge--series";
@@ -183,7 +218,7 @@ function renderBookCard(book) {
     series.title = book.series;
     meta.appendChild(series);
   }
-  if (book.dateRead) {
+  if (book.dateRead && !wip) {
     const date = document.createElement("span");
     date.className = "badge badge--muted";
     date.textContent = formatDate(book.dateRead);
@@ -193,7 +228,7 @@ function renderBookCard(book) {
   body.appendChild(title);
   body.appendChild(author);
   body.appendChild(meta);
-  body.appendChild(renderStars(book));
+  if (!wip) body.appendChild(renderStars(book));
 
   card.appendChild(coverWrap);
   card.appendChild(body);
@@ -201,14 +236,21 @@ function renderBookCard(book) {
 }
 
 function updateStats() {
-  const books = catalog.books;
-  const rated = books.filter((b) => getRating(b) > 0);
+  const readBooks = catalog.books.filter((b) => !isWip(b));
+  const visible = filteredBooks();
+  const rated = readBooks.filter((b) => getRating(b) > 0);
   const avg = rated.length
     ? rated.reduce((s, b) => s + getRating(b), 0) / rated.length
     : 0;
-  const pages = books.reduce((s, b) => s + (Number(b.pages) || 0), 0);
+  const pages = readBooks.reduce((s, b) => s + (Number(b.pages) || 0), 0);
+  const wipCount = catalog.books.filter(isWip).length;
 
-  els.bookCount().textContent = `${books.length} book${books.length === 1 ? "" : "s"}`;
+  let countLabel = `${visible.length} book${visible.length === 1 ? "" : "s"}`;
+  if (filterMode === "all") {
+    countLabel = `${readBooks.length} read · ${wipCount} WIP`;
+  }
+
+  els.bookCount().textContent = countLabel;
   els.lastUpdated().textContent = catalog.updated
     ? `Updated ${formatDate(catalog.updated)}`
     : "Updated —";
@@ -224,6 +266,10 @@ function renderGrid() {
   grid.replaceChildren();
   if (!books.length) {
     empty.hidden = false;
+    empty.textContent =
+      filterMode === "wip"
+        ? "No WIP novels in the catalog yet."
+        : "No books yet. Import a Storygraph CSV — see README.";
     return;
   }
   empty.hidden = true;
@@ -236,6 +282,20 @@ function bindSort() {
     btn.addEventListener("click", () => {
       sortMode = btn.dataset.sort || "recent";
       document.querySelectorAll(".sort-toggle__btn").forEach((el) => {
+        const active = el === btn;
+        el.classList.toggle("is-active", active);
+        el.setAttribute("aria-pressed", String(active));
+      });
+      renderGrid();
+    });
+  });
+}
+
+function bindFilter() {
+  document.querySelectorAll(".filter-toggle__btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterMode = btn.dataset.filter || "all";
+      document.querySelectorAll(".filter-toggle__btn").forEach((el) => {
         const active = el === btn;
         el.classList.toggle("is-active", active);
         el.setAttribute("aria-pressed", String(active));
@@ -274,6 +334,7 @@ async function init() {
   if (!res.ok) throw new Error("Failed to load books.json");
   catalog = await res.json();
   bindSort();
+  bindFilter();
   bindNav();
   bindExport();
   renderGrid();

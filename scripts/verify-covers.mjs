@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { coverUrl, MIN_COVER_BYTES, validateCover } from "./cover-utils.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const { books } = JSON.parse(readFileSync(join(root, "js", "books.json"), "utf8"));
@@ -10,19 +11,18 @@ let fail = 0;
 const failures = [];
 
 for (const book of books) {
-  const url = book.cover || (book.isbn ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg` : null);
+  const url = coverUrl(book);
   if (!url) {
     fail += 1;
     failures.push({ title: book.title, reason: "no cover url" });
     continue;
   }
   try {
-    const res = await fetch(url, { redirect: "follow" });
-    const buf = await res.arrayBuffer();
-    if (res.ok && buf.byteLength > 4000) ok += 1;
+    const size = url.startsWith("assets/") ? MIN_COVER_BYTES : await validateCover(url);
+    if (size >= MIN_COVER_BYTES) ok += 1;
     else {
       fail += 1;
-      failures.push({ title: book.title, status: res.status, bytes: buf.byteLength, url });
+      failures.push({ title: book.title, bytes: size, url });
     }
   } catch (err) {
     fail += 1;
@@ -30,9 +30,9 @@ for (const book of books) {
   }
 }
 
-console.log(`Covers: ${ok}/${books.length} OK, ${fail} failed`);
+console.log(`Covers: ${ok}/${books.length} OK, ${fail} failed (min ${MIN_COVER_BYTES} bytes)`);
 if (failures.length) {
   console.log("Failures:");
-  failures.forEach((f) => console.log(" -", f.title, f.status || f.reason || f.error));
+  failures.forEach((f) => console.log(" -", f.title, f.bytes ?? f.reason ?? f.error, f.url || ""));
   process.exit(1);
 }
