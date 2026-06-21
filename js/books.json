@@ -132,7 +132,7 @@
       "genre": "Science Fiction",
       "rating": 5,
       "isbn": "9780345539786",
-      "cover": "https://covers.openlibrary.org/b/id/7316188-L.jpg",
+      "cover": "https://covers.openlibrary.org/b/isbn/9780345539786-L.jpg",
       "dateRead": "2026-06-21",
       "source": "seed"
     },
@@ -217,8 +217,7 @@
       "rating": null,
       "dateRead": "2026-06-03",
       "source": "seed",
-      "cover": "https://covers.openlibrary.org/b/id/776082-L.jpg",
-      "isbn": "9781682751152"
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication71/v4/ab/b2/90/abb2902b-bb1a-46dd-a972-59b2e160aa8e/9780553393163.jpg/1000x1000bb.jpg"
     },
     {
       "id": "the-way-of-kings-brandon-sanderson",
@@ -692,7 +691,7 @@
       "genre": "Fantasy",
       "rating": null,
       "isbn": "9780316471105",
-      "cover": "https://covers.openlibrary.org/b/id/2726399-L.jpg",
+      "cover": "https://covers.openlibrary.org/b/isbn/9780316471105-L.jpg",
       "dateRead": "2026-02-21",
       "source": "seed"
     },
@@ -910,7 +909,7 @@
       "genre": "Fantasy",
       "rating": 4.5,
       "isbn": "9780356510702",
-      "cover": "https://covers.openlibrary.org/b/id/470632-L.jpg",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication116/v4/bb/a8/7c/bba87cf6-2e26-af5e-7100-e4a6c80de927/9780316539876.jpg/1000x1000bb.jpg",
       "dateRead": "2026-01-04",
       "source": "seed"
     },
@@ -2252,7 +2251,7 @@
       "genre": "Fantasy",
       "rating": 4,
       "isbn": "9780345497510",
-      "cover": "https://covers.openlibrary.org/b/id/5540971-L.jpg",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication4/v4/0c/fc/60/0cfc6041-4649-3401-bf8e-526e9d500cec/9780345515667.jpg/1000x1000bb.jpg",
       "dateRead": "2025-03-16",
       "source": "seed"
     },
@@ -3048,7 +3047,7 @@
       "genre": "Fantasy",
       "rating": 4,
       "isbn": "9780316421994",
-      "cover": "assets/covers/placeholder/the-10-000-doors-of-january-alix-e-harrow.svg",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Publication113/v4/a5/6c/fd/a56cfd11-ed0b-f7b1-1735-196ad4abe1a1/9780316421980.jpg/1000x1000bb.jpg",
       "dateRead": "2024-09-20",
       "source": "seed"
     },
