@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Benny Books — Benjamin's reading log with covers, genres, page counts, and personal ratings.">
-  <meta name="theme-color" content="#0d1117">
+  <meta name="description" content="Benny Books — latest reads with covers, ratings, and genres. Synced from Storygraph.">
+  <meta name="theme-color" content="#0a0a0b">
   <meta property="og:title" content="Benny Books">
-  <meta property="og:description" content="Latest reads in a cover grid — genre, page count, and my rating.">
+  <meta property="og:description" content="What I'm reading — cover grid with ratings, pages, and genres.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <title>Benny Books</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -36,58 +36,71 @@
   </header>
 
   <main id="top">
-    <section class="hero">
+    <section class="hero" id="reads">
       <div class="hero__intro">
-        <ul class="hero__stats" aria-label="Reading overview">
-          <li class="hero__stat hero__stat--label">Reading Log</li>
-          <li class="hero__stat" id="bookCount">Loading…</li>
-          <li class="hero__stat hero__stat--accent">Tap stars to rate</li>
+        <ul class="hero__stats" aria-label="Library overview">
+          <li class="hero__stat hero__stat--label">Reading log</li>
+          <li class="hero__stat" id="bookCount">— books</li>
+          <li class="hero__stat" id="lastUpdated">Updated —</li>
         </ul>
         <h1 class="hero__title">
           <span class="hero__title-main">Benny</span>
           <span class="hero__title-accent">Books</span>
         </h1>
-        <p class="hero__tagline">Latest reads in a cover grid — genre, page count, and my rating.</p>
+        <p class="hero__tagline">Latest finished reads — click stars to rate. Saved in your browser.</p>
       </div>
-    </section>
 
-    <section class="reads" id="reads">
-      <header class="reads-header">
-        <div class="reads-header__titles">
+      <header class="grid-header">
+        <div class="grid-header__titles">
           <p class="section__eyebrow">Recently Read</p>
-          <h2 class="reads-header__title">The Shelf</h2>
+          <h2 class="grid-header__title">The Shelf</h2>
         </div>
         <div class="sort-toggle" role="group" aria-label="Sort books">
-          <button type="button" class="sort-toggle__btn is-active" data-sort="recent" aria-pressed="true">Most Recent</button>
+          <button type="button" class="sort-toggle__btn is-active" data-sort="recent" aria-pressed="true">Newest</button>
           <button type="button" class="sort-toggle__btn" data-sort="rating" aria-pressed="false">Top Rated</button>
+          <button type="button" class="sort-toggle__btn" data-sort="series" aria-pressed="false">Series</button>
+          <button type="button" class="sort-toggle__btn" data-sort="title" aria-pressed="false">A–Z</button>
         </div>
       </header>
 
       <div id="bookGrid" class="book-grid" role="list" aria-label="Books read"></div>
+      <p class="grid-empty" id="gridEmpty" hidden>No books yet. Import a Storygraph CSV — see README.</p>
     </section>
 
-    <section class="about" id="about">
-      <div class="about__inner">
-        <p class="section__eyebrow">About</p>
-        <h2 class="about__title">Stories worth the shelf space.</h2>
-        <p class="about__copy">
-          A personal reading log linked from my GitHub profile. Covers and metadata live in
-          <code>js/books.json</code> — import a Storygraph CSV export to refresh titles.
-          Star ratings you set here stay in your browser until sync is wired up.
-        </p>
-        <p class="about__links">
-          <a href="https://github.com/brivera2005">GitHub</a>
-          <span aria-hidden="true">·</span>
-          <a href="https://bennyblack.pages.dev">Benny Black</a>
-          <span aria-hidden="true">·</span>
-          <a href="https://github.com/brivera2005/bennybooks">Source</a>
-        </p>
+    <section class="section section--about" id="about">
+      <div class="about__grid">
+        <div class="about__copy">
+          <p class="section__eyebrow">About</p>
+          <h2>Stories worth<br>shelving.</h2>
+          <p>A personal reading wall linked from my GitHub profile. Covers, page counts, genres, and half-star ratings — synced from Storygraph (or Goodreads CSV) and enriched with Open Library metadata.</p>
+          <p>Site ratings are editable here and stored locally. Run the sync script to pull fresh reads from your tracker export.</p>
+        </div>
+        <div class="about__aside">
+          <div class="about__stats">
+            <div class="stat">
+              <span class="stat__num" id="avgRating">—</span>
+              <span class="stat__label">Avg rating</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num" id="totalPages">—</span>
+              <span class="stat__label">Pages read</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num">∞</span>
+              <span class="stat__label">TBR pile</span>
+            </div>
+          </div>
+          <div class="about__actions">
+            <button type="button" class="btn btn--ghost" id="exportRatings">Export local ratings</button>
+            <a class="btn btn--primary" href="https://github.com/brivera2005/bennybooks#sync-your-library" target="_blank" rel="noopener">Sync guide</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>Benny Books · Benjamin Rivera</p>
+    <p>Benny Books · <a href="https://github.com/brivera2005">GitHub</a> · <a href="https://bennyblack.pages.dev">Benny Black</a></p>
   </footer>
 
   <script src="js/books.js" type="module"></script>
