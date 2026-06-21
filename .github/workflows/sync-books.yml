@@ -1,0 +1,52 @@
+name: Sync books from CSV
+
+on:
+  workflow_dispatch:
+    inputs:
+      enrich:
+        description: 'Enrich with Open Library metadata'
+        type: boolean
+        default: true
+  push:
+    paths:
+      - 'imports/*.csv'
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Find CSV import
+        id: csv
+        run: |
+          FILE=$(ls imports/*.csv 2>/dev/null | head -1)
+          if [ -z "$FILE" ]; then
+            echo "No CSV in imports/ — add Storygraph export and re-run."
+            exit 1
+          fi
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Import and enrich
+        run: |
+          ENRICH=""
+          if [ "${{ github.event.inputs.enrich }}" != "false" ]; then ENRICH="--enrich"; fi
+          node scripts/sync-import.mjs "${{ steps.csv.outputs.file }}" $ENRICH --limit=60
+
+      - name: Commit updated books.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/books.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: sync books from CSV import"
+            git push
+          fi

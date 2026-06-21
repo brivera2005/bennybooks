@@ -127,7 +127,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .hero {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: calc(var(--nav-h) + 1rem) clamp(1rem, 3vw, 2rem) 2rem;
 }
@@ -230,22 +230,28 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   color: var(--teal-light);
 }
 
-/* Book grid */
+/* Book grid — 2 / 4 / 6 / 8 columns */
 .book-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(0.75rem, 2vw, 1.25rem);
+  gap: clamp(0.75rem, 1.5vw, 1.125rem);
 }
 
 @media (min-width: 640px) {
   .book-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
   .book-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .book-grid {
+    grid-template-columns: repeat(8, 1fr);
   }
 }
 
@@ -256,12 +262,20 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease;
+  will-change: transform;
 }
 
 .book-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(20, 184, 166, 0.15);
+  transform: translateY(-5px) scale(1.015);
+  border-color: rgba(20, 184, 166, 0.38);
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.42),
+    0 0 28px var(--teal-glow),
+    0 0 0 1px rgba(20, 184, 166, 0.22);
 }
 
 .book-card__cover-wrap {
@@ -271,11 +285,36 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   overflow: hidden;
 }
 
+.book-card__cover-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 184, 166, 0.08) 0%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  transition: opacity 0.28s ease;
+}
+
+.book-card:hover .book-card__cover-wrap::after {
+  opacity: 1;
+}
+
 .book-card__cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.28s ease;
+}
+
+.book-card:hover .book-card__cover {
+  transform: scale(1.045);
+  filter: brightness(1.07) saturate(1.04);
 }
 
 .book-card__cover--fallback {
@@ -345,6 +384,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border-color: var(--border);
 }
 
+.badge--series {
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--teal);
+  border-color: rgba(20, 184, 166, 0.18);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Star rating */
 .stars {
   display: inline-flex;
@@ -394,7 +443,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .section {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 3rem clamp(1rem, 3vw, 2rem) 4rem;
 }

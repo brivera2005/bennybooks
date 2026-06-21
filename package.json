@@ -5,7 +5,10 @@
   "description": "Benny Books — reading log with cover grid and ratings",
   "scripts": {
     "build": "node scripts/validate.mjs",
-    "deploy": "npx wrangler pages deploy . --project-name=bennyreads"
+    "sync": "node scripts/sync-import.mjs",
+    "enrich": "node scripts/enrich-openlibrary.mjs",
+    "seed": "node scripts/seed-catalog.mjs",
+    "deploy": "npx wrangler pages deploy . --project-name=bennybooks"
   },
   "devDependencies": {
     "wrangler": "^4.24.0"
