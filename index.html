@@ -55,11 +55,18 @@
           <p class="section__eyebrow">Recently Read</p>
           <h2 class="grid-header__title">The Shelf</h2>
         </div>
-        <div class="sort-toggle" role="group" aria-label="Sort books">
-          <button type="button" class="sort-toggle__btn is-active" data-sort="recent" aria-pressed="true">Newest</button>
-          <button type="button" class="sort-toggle__btn" data-sort="rating" aria-pressed="false">Top Rated</button>
-          <button type="button" class="sort-toggle__btn" data-sort="series" aria-pressed="false">Series</button>
-          <button type="button" class="sort-toggle__btn" data-sort="title" aria-pressed="false">A–Z</button>
+        <div class="grid-header__controls">
+          <div class="filter-toggle" role="group" aria-label="Filter books">
+            <button type="button" class="filter-toggle__btn is-active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-toggle__btn" data-filter="read" aria-pressed="false">Read</button>
+            <button type="button" class="filter-toggle__btn" data-filter="wip" aria-pressed="false">My WIP</button>
+          </div>
+          <div class="sort-toggle" role="group" aria-label="Sort books">
+            <button type="button" class="sort-toggle__btn is-active" data-sort="recent" aria-pressed="true">Newest</button>
+            <button type="button" class="sort-toggle__btn" data-sort="rating" aria-pressed="false">Top Rated</button>
+            <button type="button" class="sort-toggle__btn" data-sort="series" aria-pressed="false">Series</button>
+            <button type="button" class="sort-toggle__btn" data-sort="title" aria-pressed="false">A–Z</button>
+          </div>
         </div>
       </header>
 

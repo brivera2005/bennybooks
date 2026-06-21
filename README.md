@@ -23,8 +23,8 @@ Open `http://localhost:8080`.
 | **Storygraph** | No official public API (roadmap item, not shipped) | **CSV export** — best option. Account → Manage Account → Export StoryGraph Library |
 | **Goodreads** | API deprecated since Dec 2020; no new keys | **CSV export** — My Books → Import and export → Export Library |
 | **Pagebound** | No export API; import-only from GR/SG CSV | Not a sync source — use Storygraph or Goodreads instead |
-| **Open Library** | Free REST API | Metadata enrichment (covers, pages, subjects/genre) |
-| **Google Books** | Free API (API key optional for higher limits) | Fallback enrichment; not wired in MVP but easy to add |
+| **Open Library** | Free REST API | Primary metadata (covers, pages, subjects/genre) |
+| **iTunes Search API** | Free, no key | Cover fallback when Open Library has no art (same backend as [iTunes Artwork Finder](https://bendodson.com/projects/itunes-artwork-finder/)) |
 
 **Recommended workflow:** Export Storygraph CSV monthly (or on each finished book), run the import script, commit `js/books.json`. Optional GitHub Action auto-imports when you drop a CSV in `imports/`.
 
@@ -38,7 +38,7 @@ Open `http://localhost:8080`.
 node scripts/sync-import.mjs imports/storygraph.csv --enrich
 ```
 
-`--enrich` calls Open Library for page counts, genres, and cover URLs (Storygraph CSV often lacks pages/genre).
+`--enrich` calls Open Library for page counts, genres, and cover URLs, then falls back to the iTunes Search API for missing covers (Storygraph CSV often lacks pages/genre).
 
 Options:
 
@@ -71,7 +71,9 @@ bennybooks/
 │   └── books.json      # Data file (committed after sync)
 ├── scripts/
 │   ├── sync-import.mjs       # Storygraph / Goodreads CSV → books.json
-│   └── enrich-openlibrary.mjs
+│   ├── enrich-openlibrary.mjs
+│   ├── cover-sources.mjs     # Open Library → iTunes cover pipeline
+│   └── fix-covers.mjs        # Re-resolve broken/tiny covers
 ├── imports/            # Drop CSV exports here (gitignored contents optional)
 └── .github/workflows/sync-books.yml
 ```
@@ -113,6 +115,18 @@ Edit `js/books.json`:
 
 Run `node scripts/enrich-openlibrary.mjs` to fill missing metadata.
 
+### Cover sources
+
+When resolving covers (import `--enrich`, `npm run enrich`, or `npm run fix-covers`):
+
+1. **Open Library** — ISBN or title/author search (`covers.openlibrary.org`)
+2. **iTunes Search API** — title + author, `entity=ebook`, upscaled artwork (`100x100bb` → `1000x1000bb`)
+3. **Placeholder** — site shows a generated fallback if both fail (common for unreleased WIP titles)
+
+```bash
+npm run fix-covers   # re-check all books in js/books.json
+```
+
 ## License
 
-Site code MIT. Book covers/metadata belong to respective publishers and Open Library.
+Site code MIT. Book covers/metadata belong to respective publishers, Open Library, and Apple Books.

@@ -7,6 +7,10 @@
     "build": "node scripts/validate.mjs",
     "sync": "node scripts/sync-import.mjs",
     "enrich": "node scripts/enrich-openlibrary.mjs",
+    "fix-covers": "node scripts/fix-covers.mjs",
+    "fix-covers": "node scripts/fix-covers.mjs",
+    "verify-covers": "node scripts/verify-covers.mjs",
+    "add-wip": "node scripts/add-wip-novels.mjs",
     "seed": "node scripts/seed-catalog.mjs",
     "deploy": "npx wrangler pages deploy . --project-name=bennybooks"
   },

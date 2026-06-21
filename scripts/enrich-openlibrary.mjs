@@ -1,25 +1,24 @@
 /**
- * Enrich book records with pages, genre, and cover from Open Library.
+ * Enrich book records with pages, genre, and cover.
+ * Cover pipeline: Open Library → iTunes Search API.
  * Used by sync-import.mjs --enrich and enrich-openlibrary.mjs CLI.
  */
 
-const OL_SEARCH = 'https://openlibrary.org/search.json';
-const OL_BOOKS = 'https://openlibrary.org/api/books';
+import { resolveCover, sleep } from "./cover-sources.mjs";
 
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
+const OL_SEARCH = "https://openlibrary.org/search.json";
+const OL_BOOKS = "https://openlibrary.org/api/books";
 
 async function fetchJson(url) {
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'bennybooks/1.0 (personal reading site)' },
+    headers: { "User-Agent": "bennybooks/1.0 (personal reading site)" },
   });
   if (!res.ok) return null;
   return res.json();
 }
 
 function pickGenre(subjects = []) {
-  const skip = new Set(['fiction', 'nonfiction', 'accessible book', 'protected daisy']);
+  const skip = new Set(["fiction", "nonfiction", "accessible book", "protected daisy"]);
   for (const s of subjects) {
     const lower = String(s).toLowerCase();
     if (!skip.has(lower) && lower.length > 2) return String(s);
@@ -40,7 +39,7 @@ async function lookupByIsbn(isbn) {
 }
 
 async function lookupByTitleAuthor(title, author) {
-  const q = new URLSearchParams({ title, author, limit: '1' });
+  const q = new URLSearchParams({ title, author, limit: "1" });
   const data = await fetchJson(`${OL_SEARCH}?${q}`);
   const doc = data?.docs?.[0];
   if (!doc) return null;
@@ -58,15 +57,22 @@ export async function enrichBook(book) {
   let meta = null;
   if (book.isbn) meta = await lookupByIsbn(book.isbn);
   if (!meta) meta = await lookupByTitleAuthor(book.title, book.author);
-  if (!meta) return book;
 
-  return {
+  const merged = {
     ...book,
-    pages: book.pages || meta.pages || undefined,
-    genre: book.genre || meta.genre || undefined,
-    cover: book.cover || meta.cover || undefined,
-    isbn: book.isbn || meta.isbn || undefined,
+    pages: book.pages || meta?.pages || undefined,
+    genre: book.genre || meta?.genre || undefined,
+    cover: book.cover || meta?.cover || undefined,
+    isbn: book.isbn || meta?.isbn || undefined,
   };
+
+  const { cover, source } = await resolveCover(merged);
+  if (cover) {
+    merged.cover = cover;
+    if (source === "itunes") merged.coverSource = "itunes";
+  }
+
+  return merged;
 }
 
 export async function enrichBooks(books, { delayMs = 300 } = {}) {
@@ -79,18 +85,19 @@ export async function enrichBooks(books, { delayMs = 300 } = {}) {
 }
 
 // CLI: node scripts/enrich-openlibrary.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
 
 if (isMain) {
-  const path = join(__dirname, '..', 'js', 'books.json');
-  const data = JSON.parse(readFileSync(path, 'utf8'));
+  const path = join(__dirname, "..", "js", "books.json");
+  const data = JSON.parse(readFileSync(path, "utf8"));
   data.books = await enrichBooks(data.books || []);
   data.updated = new Date().toISOString().slice(0, 10);
-  writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
-  console.log(`Enriched ${data.books.length} books in ${path}`);
+  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
+  const itunes = data.books.filter((b) => b.coverSource === "itunes").length;
+  console.log(`Enriched ${data.books.length} books in ${path} (${itunes} via iTunes)`);
 }
