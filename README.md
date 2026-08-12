@@ -1,6 +1,6 @@
 # Benny Books
 
-Personal reading wall — cover grid with pages, genre, and editable star ratings. Linked from [brivera2005/brivera2005](https://github.com/brivera2005/brivera2005) GitHub profile.
+Personal reading wall - cover grid with pages, genre, and editable star ratings. Linked from [brivera2005/brivera2005](https://github.com/brivera2005/brivera2005) GitHub profile.
 
 Static site (same stack as [benny-black](https://github.com/brivera2005/benny-black)): HTML + CSS + vanilla JS, deployed to Cloudflare Pages.
 
@@ -20,9 +20,9 @@ Open `http://localhost:8080`.
 
 | Source | Auto API? | Practical sync path |
 |--------|-----------|---------------------|
-| **Storygraph** | No official public API (roadmap item, not shipped) | **CSV export** — best option. Account → Manage Account → Export StoryGraph Library |
-| **Goodreads** | API deprecated since Dec 2020; no new keys | **CSV export** — My Books → Import and export → Export Library |
-| **Pagebound** | No export API; import-only from GR/SG CSV | Not a sync source — use Storygraph or Goodreads instead |
+| **Storygraph** | No official public API (roadmap item, not shipped) | **CSV export** - best option. Account → Manage Account → Export StoryGraph Library |
+| **Goodreads** | API deprecated since Dec 2020; no new keys | **CSV export** - My Books → Import and export → Export Library |
+| **Pagebound** | No export API; import-only from GR/SG CSV | Not a sync source - use Storygraph or Goodreads instead |
 | **Open Library** | Free REST API | Primary metadata (covers, pages, subjects/genre) |
 | **iTunes Search API** | Free, no key | Cover fallback when Open Library has no art (same backend as [iTunes Artwork Finder](https://bendodson.com/projects/itunes-artwork-finder/)) |
 
@@ -42,14 +42,14 @@ node scripts/sync-import.mjs imports/storygraph.csv --enrich
 
 Options:
 
-- `--limit=48` — keep only the N most recently read books (good for a “latest reads” grid).
+- `--limit=48` - keep only the N most recently read books (good for a “latest reads” grid).
 - Omit `--enrich` for a fast import using ISBN cover URLs only.
 
 ### Automatic updates (GitHub Action)
 
 1. Push this repo to GitHub.
 2. Drop your latest export at `imports/storygraph.csv` (any `*.csv` in `imports/` works).
-3. Push — the [sync-books workflow](.github/workflows/sync-books.yml) runs on `imports/*.csv` changes.
+3. Push - the [sync-books workflow](.github/workflows/sync-books.yml) runs on `imports/*.csv` changes.
 4. Or trigger manually: Actions → Sync books from CSV → Run workflow.
 
 The workflow commits updated `js/books.json`. Cloudflare Pages redeploys on push.
@@ -64,17 +64,17 @@ The workflow commits updated `js/books.json`. Cloudflare Pages redeploys on push
 
 ```
 bennybooks/
-├── index.html          # Landing + book grid
-├── css/style.css       # Teal dark theme (matches GitHub profile)
+├── index.html # Landing + book grid
+├── css/style.css # Teal dark theme (matches GitHub profile)
 ├── js/
-│   ├── books.js        # Grid, sort, editable stars
-│   └── books.json      # Data file (committed after sync)
+│ ├── books.js # Grid, sort, editable stars
+│ └── books.json # Data file (committed after sync)
 ├── scripts/
-│   ├── sync-import.mjs       # Storygraph / Goodreads CSV → books.json
-│   ├── enrich-openlibrary.mjs
-│   ├── cover-sources.mjs     # Open Library → iTunes cover pipeline
-│   └── fix-covers.mjs        # Re-resolve broken/tiny covers
-├── imports/            # Drop CSV exports here (gitignored contents optional)
+│ ├── sync-import.mjs # Storygraph / Goodreads CSV → books.json
+│ ├── enrich-openlibrary.mjs
+│ ├── cover-sources.mjs # Open Library → iTunes cover pipeline
+│ └── fix-covers.mjs # Re-resolve broken/tiny covers
+├── imports/ # Drop CSV exports here (gitignored contents optional)
 └── .github/workflows/sync-books.yml
 ```
 
@@ -100,16 +100,16 @@ Edit `js/books.json`:
 
 ```json
 {
-  "id": "unique-slug",
-  "title": "Book Title",
-  "author": "Author Name",
-  "pages": 300,
-  "genre": "Literary Fiction",
-  "rating": 4.5,
-  "cover": "https://covers.openlibrary.org/b/isbn/978XXXXXXXXXX-M.jpg",
-  "isbn": "978XXXXXXXXXX",
-  "dateRead": "2026-06-01",
-  "source": "manual"
+ "id": "unique-slug",
+ "title": "Book Title",
+ "author": "Author Name",
+ "pages": 300,
+ "genre": "Literary Fiction",
+ "rating": 4.5,
+ "cover": "https://covers.openlibrary.org/b/isbn/978XXXXXXXXXX-M.jpg",
+ "isbn": "978XXXXXXXXXX",
+ "dateRead": "2026-06-01",
+ "source": "manual"
 }
 ```
 
@@ -119,12 +119,12 @@ Run `node scripts/enrich-openlibrary.mjs` to fill missing metadata.
 
 When resolving covers (import `--enrich`, `npm run enrich`, or `npm run fix-covers`):
 
-1. **Open Library** — ISBN or title/author search (`covers.openlibrary.org`)
-2. **iTunes Search API** — title + author, `entity=ebook`, upscaled artwork (`100x100bb` → `1000x1000bb`)
-3. **Placeholder** — site shows a generated fallback if both fail (common for unreleased WIP titles)
+1. **Open Library** - ISBN or title/author search (`covers.openlibrary.org`)
+2. **iTunes Search API** - title + author, `entity=ebook`, upscaled artwork (`100x100bb` → `1000x1000bb`)
+3. **Placeholder** - site shows a generated fallback if both fail (common for unreleased WIP titles)
 
 ```bash
-npm run fix-covers   # re-check all books in js/books.json
+npm run fix-covers # re-check all books in js/books.json
 ```
 
 ## License
